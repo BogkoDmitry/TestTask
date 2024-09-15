@@ -19,12 +19,12 @@ services:
 
     test-task-api:
         depends_on: 
-        - "test-task-db"
+            - "test-task-db"
         build:
-            context: ./TestTask.Api
+            context: ./TestTask.WebApi
             dockerfile: Dockerfile
         container_name: test-task-api
         ports:
             - "5081:80"
         environment:
-            - ConnectionStrings__DefaultConnection="User ID =test;Password=test;Host=test-task-db;Port=5432;Database=test-db; Integrated Security=true;Pooling=true;"
+            - ConnectionStrings__DefaultConnection=User ID=test;Password=test;Host=test-task-db;Port=5432;Database=test-db;Integrated Security=true;Pooling=true;
