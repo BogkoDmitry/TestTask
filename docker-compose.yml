@@ -1,0 +1,30 @@
+version: "3.9"
+
+volumes:
+    test-task-db:
+        name: test-task-db
+
+services:
+    test-task-db:
+        image: postgres:latest
+        container_name: test-task-db
+        environment:
+            - POSTGRES_DB=test-db
+            - POSTGRES_USER=test
+            - POSTGRES_PASSWORD=test
+        ports:
+            - "5401:5432"
+        volumes:
+            - test-task-db:/var/lib/postgresql/data
+
+    test-task-api:
+        depends_on: 
+        - "test-task-db"
+        build:
+            context: ./TestTask.Api
+            dockerfile: Dockerfile
+        container_name: test-task-api
+        ports:
+            - "5081:80"
+        environment:
+            - ConnectionStrings__DefaultConnection="User ID =test;Password=test;Host=test-task-db;Port=5432;Database=test-db; Integrated Security=true;Pooling=true;"
