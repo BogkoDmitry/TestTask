@@ -12,8 +12,8 @@ using TestTask.WebApi.Infrastructure;
 namespace TestTask.WebApi.Migrations
 {
     [DbContext(typeof(TestTaskDbContext))]
-    [Migration("20240915173805_fourth")]
-    partial class fourth
+    [Migration("20240915204653_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace TestTask.WebApi.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TestTask.WebApi.ExceptionReport", b =>
+            modelBuilder.Entity("TestTask.WebApi.Entities.ExceptionReport", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,7 +48,7 @@ namespace TestTask.WebApi.Migrations
                     b.ToTable("Exceptions");
                 });
 
-            modelBuilder.Entity("TestTask.WebApi.TreeNode", b =>
+            modelBuilder.Entity("TestTask.WebApi.Entities.TreeNode", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,26 +66,9 @@ namespace TestTask.WebApi.Migrations
                     b.Property<string>("TreeName")
                         .HasColumnType("text");
 
-                    b.Property<long?>("TreeNodeId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("TreeNodeId");
-
                     b.ToTable("Nodes");
-                });
-
-            modelBuilder.Entity("TestTask.WebApi.TreeNode", b =>
-                {
-                    b.HasOne("TestTask.WebApi.TreeNode", null)
-                        .WithMany("Children")
-                        .HasForeignKey("TreeNodeId");
-                });
-
-            modelBuilder.Entity("TestTask.WebApi.TreeNode", b =>
-                {
-                    b.Navigation("Children");
                 });
 #pragma warning restore 612, 618
         }

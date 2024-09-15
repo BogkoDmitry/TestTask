@@ -16,9 +16,9 @@ namespace TestTask.WebApi.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    EventId = table.Column<long>(type: "bigint", nullable: false),
+                    EventId = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    Data = table.Column<string>(type: "text", nullable: false)
+                    Text = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,23 +33,12 @@ namespace TestTask.WebApi.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     ParentId = table.Column<long>(type: "bigint", nullable: true),
-                    TreeName = table.Column<string>(type: "text", nullable: false),
-                    TreeNodeId = table.Column<long>(type: "bigint", nullable: true)
+                    TreeName = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Nodes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Nodes_Nodes_TreeNodeId",
-                        column: x => x.TreeNodeId,
-                        principalTable: "Nodes",
-                        principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Nodes_TreeNodeId",
-                table: "Nodes",
-                column: "TreeNodeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
